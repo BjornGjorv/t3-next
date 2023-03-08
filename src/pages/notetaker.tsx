@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "~/components/NavBar";
 import { useSession } from "next-auth/react";
-// import { api } from "~/utils/api";
 import { api, type RouterOutputs } from "../utils/api";
 
 const Home: NextPage = () => {
@@ -35,10 +34,15 @@ const Content: React.FC = () => {
   const { data: sessionData } = useSession();
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
 
+  useEffect(() => {console.log("selectedTopic: ", selectedTopic)}, [selectedTopic]);
+
   const {data: topics, refetch: refetchTopics} = api.topic.getAll.useQuery(
     undefined, 
       {
         enabled: sessionData?.user !== undefined,
+        onSuccess: (data) => {
+          setSelectedTopic(selectedTopic ?? data[0] ?? null)
+        }
       }
     );
 
