@@ -48,7 +48,14 @@ const Home: NextPage = () => {
             <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
-            <AuthShowcase />
+                <AuthShowcase />
+                <Link href="/notetaker">
+                    <button className="rounded-full px-10 py-3 font-semibold text-white
+                      underline underline-offset-8 transition mt-4 "
+                      onClick={() => {console.log("Clicked")}}>
+                      Notetaker
+                    </button>
+                </Link>
           </div>
         </div>
       </main>
