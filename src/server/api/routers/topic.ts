@@ -36,6 +36,7 @@ export const topicRouter = createTRPCRouter({
         data: {
           title: input.title,
           userId: ctx.session.user.id,
+          content: "noContent"
         },
       });
     }),

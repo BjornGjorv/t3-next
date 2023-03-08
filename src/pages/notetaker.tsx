@@ -37,5 +37,30 @@ const Content: React.FC = () => {
       }
     );
 
-    return <div>{JSON.stringify(topics)}</div>
+    const createTopic = api.topic.create.useMutation({});
+
+    // return <div>{JSON.stringify(topics)}</div>
+    return (
+      <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
+            <div className="px-2">
+            <div className="col-span-3">
+            <div className="divider"></div>
+                <input
+                  type="text"
+                  placeholder="New Topic"
+                  className="input-bordered input input-sm w-full"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      createTopic.mutate({
+                        title: e.currentTarget.value,
+                      });
+                      e.currentTarget.value = "";
+                    }
+                  }}
+                />
+              </div>
+            </div>
+      </div>
+    )
+    
 }
