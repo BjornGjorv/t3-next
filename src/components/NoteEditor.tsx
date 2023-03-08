@@ -9,7 +9,7 @@ export const NoteEditor = ({
 }: {
   onSave: (note: { title: string; content: string }) => void;
 }) => {
-  const [code, setCode] = useState<string>("someCode");
+  const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
 
   return (
@@ -18,14 +18,14 @@ export const NoteEditor = ({
         <h2 className="card-title">
           <input
             type="text"
-            placeholder="Note title"
+            placeholder="Title"
             className="input-primary input input-lg w-full font-bold"
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
         <input
             type="text"
-            placeholder="Note body"
+            placeholder="Body"
             className="input-primary input input-lg w-full font-bold"
             value={code}
             onChange={(e) => setCode(e.currentTarget.value)}

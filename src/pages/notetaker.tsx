@@ -5,6 +5,7 @@ import NavBar from "~/components/NavBar";
 import { useSession } from "next-auth/react";
 import { api, type RouterOutputs } from "../utils/api";
 import { NoteEditor } from "~/components/NoteEditor";
+import { NoteCard } from "~/components/NoteCard";
 
 const Home: NextPage = () => {
 
@@ -68,15 +69,13 @@ const Content: React.FC = () => {
       },
     });
   
-    // const deleteNote = api.note.delete.useMutation({
-    //   onSuccess: () => {
-    //     void refetchNotes();
-    //   },
-    // });
+    const deleteNote = api.note.delete.useMutation({
+      onSuccess: () => {
+        void refetchNotes();
+      },
+    });
 
-    // return <div>{JSON.stringify(topics)}</div>
     return (
-      // <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
       <div>
           <div className="px-2">
           <div className="col-span-3">
@@ -112,6 +111,16 @@ const Content: React.FC = () => {
             </div>
           </div>
           <div className="col-span-3">
+            <div>
+              {notes?.map((note) => (
+                <div key={note.id} className="mt-5">
+                  <NoteCard
+                    note={note}
+                    onDelete={() => void deleteNote.mutate({ id: note.id })}
+                  />
+                </div>
+              ))}
+            </div>
               <NoteEditor
               onSave={({ title, content }) => {
                 void createNote.mutate({
