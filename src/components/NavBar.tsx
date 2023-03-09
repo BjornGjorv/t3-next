@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
+import DropDownMenu from "./DropDownMenu";
 
 const NavBar = () => {
     const { data: sessionData } = useSession();
@@ -11,18 +12,7 @@ const NavBar = () => {
             <div className="flex-none gap-2">
                 <div className="dropdown-end dropdown">
                 {sessionData?.user ? (
-                    <label
-                    tabIndex={0}
-                    className="btn-ghost btn-circle avatar btn"
-                    onClick={() => {console.log("clicked selfportrait, you ego person")}}
-                    >
-                    <div className="w-10 rounded-full">
-                        <img
-                        src={sessionData?.user?.image ?? ""}
-                        alt={sessionData?.user?.name ?? ""}
-                        />
-                    </div>
-                    </label>
+                  <DropDownMenu/>
                 ) : (
                     <button
                     className="btn-ghost rounded-btn btn"
