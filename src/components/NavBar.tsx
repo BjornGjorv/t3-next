@@ -14,7 +14,7 @@ const NavBar = () => {
                     <label
                     tabIndex={0}
                     className="btn-ghost btn-circle avatar btn"
-                    onClick={() => {console.log("clicked selfportrait")}}
+                    onClick={() => {console.log("clicked selfportrait, you ego person")}}
                     >
                     <div className="w-10 rounded-full">
                         <img
