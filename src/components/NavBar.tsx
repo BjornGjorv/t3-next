@@ -6,7 +6,7 @@ const NavBar = () => {
   const { data: sessionData } = useSession();
 
   return (
-    <nav className="navbar bg-secondary text-primary-content">
+    <nav className="navbar bg-primary text-primary-content">
       <section className="flex-1 p-5 pl-5 text-lg font-bold">
         <Link href="/">
           {sessionData?.user?.name
