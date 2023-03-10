@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "~/components/NavBar";
@@ -6,9 +6,9 @@ import { useSession } from "next-auth/react";
 import { api, type RouterOutputs } from "../utils/api";
 import { NoteEditor } from "~/components/NoteEditor";
 import { NoteCard } from "~/components/NoteCard";
+import HearthSVG from "~/icons/HearthSVG";
 
 const Home: NextPage = () => {
-
   return (
     <>
       <Head>
@@ -19,9 +19,9 @@ const Home: NextPage = () => {
       <main>
         <NavBar />
         <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">Dis is page
-          <Content />
-        </div>
+          <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+            <Content />
+          </div>
         </section>
       </main>
     </>
@@ -34,54 +34,59 @@ type Topic = RouterOutputs["topic"]["getAll"][0];
 
 const Content: React.FC = () => {
   const { data: sessionData } = useSession();
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
+  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [categoryInput, setCategoryInput] = useState("");
 
-  useEffect(() => {console.log("selectedTopic: ", selectedTopic)}, [selectedTopic]);
-
-  const {data: topics, refetch: refetchTopics} = api.topic.getAll.useQuery(
-    undefined, 
-      {
-        enabled: sessionData?.user !== undefined,
-        onSuccess: (data) => {
-          setSelectedTopic(selectedTopic ?? data[0] ?? null)
-        }
-      }
-    );
-
-    const createTopic = api.topic.create.useMutation({
-      onSuccess: () => {
-        void refetchTopics();
-      }
-    });
-
-    const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
-      {
-        topicId: selectedTopic?.id ?? "",
+  const { data: topics, refetch: refetchTopics } = api.topic.getAll.useQuery(
+    undefined,
+    {
+      enabled: sessionData?.user !== undefined,
+      onSuccess: (data) => {
+        setSelectedTopic(selectedTopic ?? data[0] ?? null);
       },
-      {
-        enabled: sessionData?.user !== undefined && selectedTopic !== null,
-      }
-    );
+    }
+  );
 
-    const createNote = api.note.create.useMutation({
-      onSuccess: () => {
-        void refetchNotes();
-      },
-    });
-  
-    const deleteNote = api.note.delete.useMutation({
-      onSuccess: () => {
-        void refetchNotes();
-      },
-    });
+  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
+    {
+      topicId: selectedTopic?.id ?? "",
+    },
+    {
+      enabled: sessionData?.user !== undefined && selectedTopic !== null,
+    }
+  );
 
-    return (
-      <div>
-          <div className="px-2">
-          <div className="col-span-3">
-          <ul className="menu rounded-box w-56 bg-base-100 p-2">
-          {topics?.map((topic) => (
-            <li key={topic.id}>
+  const createTopic = api.topic.create.useMutation({
+    onSuccess: () => {
+      void refetchTopics();
+    },
+  });
+
+  const deleteTopic = api.topic.delete.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
+  const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
+  const deleteNote = api.note.delete.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
+  return (
+    <div>
+      <h1 className="mb-8 text-4xl font-bold text-white">Categories</h1>
+      <ul className="menu rounded-box mb-8 bg-base-100 p-2">
+        {topics?.map((topic) => (
+          <li key={topic.id}>
+            <div className="flex justify-between">
               <a
                 href="#"
                 onClick={(evt) => {
@@ -91,47 +96,71 @@ const Content: React.FC = () => {
               >
                 {topic.title}
               </a>
-            </li>
-          ))}
-        </ul>
-          <div className="divider"></div>
-              <input
-                type="text"
-                placeholder="New Topic"
-                className="input-bordered input input-sm w-full"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    createTopic.mutate({
-                      title: e.currentTarget.value,
-                    });
-                    e.currentTarget.value = "";
-                  }
+              <span
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  deleteTopic.mutate({ id: topic.id });
                 }}
+              >
+                X
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="New Category"
+          className="input-bordered input input-md w-full"
+          value={categoryInput}
+          onChange={(e) => setCategoryInput(e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              createTopic.mutate({
+                title: categoryInput,
+              });
+              setCategoryInput("");
+              e.currentTarget.value = "";
+            }
+          }}
+        />
+        <button
+          className="btn-primary btn gap-2"
+          onClick={(e) => {
+            createTopic.mutate({
+              title: categoryInput,
+            });
+            setCategoryInput("");
+          }}
+        >
+          <HearthSVG />
+          Add
+        </button>
+      </div>
+      <div className="divider mt-8 mb-8"></div>
+
+      <div className="col-span-3">
+        <div>
+          {notes?.map((note) => (
+            <div key={note.id} className="mt-5">
+              <NoteCard
+                note={note}
+                onDelete={() => void deleteNote.mutate({ id: note.id })}
               />
             </div>
-          </div>
-          <div className="col-span-3">
-            <div>
-              {notes?.map((note) => (
-                <div key={note.id} className="mt-5">
-                  <NoteCard
-                    note={note}
-                    onDelete={() => void deleteNote.mutate({ id: note.id })}
-                  />
-                </div>
-              ))}
-            </div>
-              <NoteEditor
-              onSave={({ title, content }) => {
-                void createNote.mutate({
-                  title,
-                  content,
-                  topicId: selectedTopic?.id ?? "",
-                });
-              }}
-            />
-          </div>
+          ))}
+        </div>
+        <NoteEditor
+          onSave={({ title, content }) => {
+            void createNote.mutate({
+              title,
+              content,
+              topicId: selectedTopic?.id ?? "",
+            });
+          }}
+        />
       </div>
-    )
-    
-}
+    </div>
+  );
+};
