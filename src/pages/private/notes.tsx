@@ -86,7 +86,7 @@ const Content: React.FC = () => {
 
   return (
     <div>
-      <h1 className="mb-8 text-4xl font-bold text-white">Categories</h1>
+      <h1 className="mb-8 text-4xl font-bold">Categories</h1>
       <ul className="menu rounded-box mb-8 bg-base-100 p-2">
         {topics?.map((topic) => (
           <li key={topic.id}>
@@ -152,7 +152,7 @@ const Content: React.FC = () => {
       </div>
       <div className="divider mt-8 mb-8"></div>
 
-      <h1 className="mb-8 text-4xl font-bold text-white">
+      <h1 className="mb-8 text-4xl font-bold">
         Global state counter: {globalState}
       </h1>
       <div className="col-span-3">
