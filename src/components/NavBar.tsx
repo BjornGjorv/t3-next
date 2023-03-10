@@ -13,12 +13,15 @@ const NavBar = () => {
     "Bro",
     "Brawl",
     "Bruh",
-    "Slicer",
     "Bong",
+    "Slicer",
+    "B0000i",
+    "Brew",
     "Bing",
-    "Bangs",
     "Bank",
     "Slice",
+    "Bangs",
+    "Brawl",
     "Bingo",
     "B0i",
     "Me",
@@ -37,7 +40,7 @@ const NavBar = () => {
           </div>
           <p>
             byte
-            {globalState ? logoArray[globalState % logoArray.length] : "Brew"}
+            {globalState ? logoArray[globalState % logoArray.length] : "Brawl"}
           </p>
         </Link>
       </section>
