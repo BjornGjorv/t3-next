@@ -46,6 +46,8 @@ const selectRandomToast = (): string => {
   return toastList[randomIndex] || "You did it!";
 };
 
+let previousTitleLength = 0;
+let previousBodyLength = 0;
 export const NoteEditor = ({
   onSave,
 }: {
@@ -61,17 +63,6 @@ export const NoteEditor = ({
 
   const TITLE_MIN_LENGTH = 25;
   const BODY_MIN_LENGTH = 35;
-  const titleToastActive = toastType === "title";
-  const bodyToastActive = toastType === "body";
-
-  useEffect(() => {
-    console.log("bodyLength: ", bodyLength);
-    console.log("toastMessage: ", toastMessage);
-    console.log("toastType: ", toastType);
-    setToastType("");
-    setBodyLength(0);
-    setTitleLength(0);
-  }, []);
 
   const hideToastAfterDelay = (delay = 5000): void => {
     setTimeout(() => {
@@ -80,22 +71,30 @@ export const NoteEditor = ({
     }, delay);
   };
 
+  // TODO: Generalize both these useEffects into one
+  // Lots of duplication here
   useEffect(() => {
-    // Show toast if title length is a multiple of TITLE_MIN_LENGTH
-    if (titleLength % TITLE_MIN_LENGTH === 0 && !titleToastActive) {
+    const titleToastActive = toastType === "title";
+    const lengthIncreasing = titleLength > previousTitleLength;
+    const isMultipleOfMinLength = titleLength % TITLE_MIN_LENGTH === 0;
+    if (lengthIncreasing && isMultipleOfMinLength && !titleToastActive) {
       setToastMessage(selectRandomToast());
       setToastType("title");
       hideToastAfterDelay();
     }
+    previousTitleLength = titleLength;
   }, [titleLength]);
 
   useEffect(() => {
-    // Show toast if body length is a multiple of BODY_MIN_LENGTH
-    if (bodyLength % BODY_MIN_LENGTH === 0 && !bodyToastActive) {
+    const bodyToastActive = toastType === "body";
+    const isMultipleOfMinLength = bodyLength % BODY_MIN_LENGTH === 0;
+    const lengthIncreasing = bodyLength > previousBodyLength;
+    if (lengthIncreasing && isMultipleOfMinLength && !bodyToastActive) {
       setToastMessage(selectRandomToast());
       setToastType("body");
       hideToastAfterDelay();
     }
+    previousBodyLength = bodyLength;
   }, [bodyLength]);
 
   return (
