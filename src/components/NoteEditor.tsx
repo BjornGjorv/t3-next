@@ -23,6 +23,7 @@ const toastList = [
   "You're a note-taking machine! Keep it up.",
   "Amazing! Thats a note of perfection.",
   "We'll take note of that!",
+  "You're one of a TYPE(-ist)",
 ];
 
 type toastStyle = {
