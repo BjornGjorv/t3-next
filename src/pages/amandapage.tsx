@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "~/components/NavBar";
-import { useSession } from "next-auth/react";
-import { api, type RouterOutputs } from "../utils/api";
-import { NoteEditor } from "~/components/NoteEditor";
-import { NoteCard } from "~/components/NoteCard";
+import { useAtom } from "jotai";
+import { globalStateAtom } from "~/state/globalState";
 
 const Home: NextPage = () => {
-
   return (
     <>
       <Head>
@@ -19,9 +15,9 @@ const Home: NextPage = () => {
       <main>
         <NavBar />
         <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">Dis is page
-          <Content />
-        </div>
+          <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+            <Content />
+          </div>
         </section>
       </main>
     </>
@@ -30,108 +26,14 @@ const Home: NextPage = () => {
 
 export default Home;
 
-type Topic = RouterOutputs["topic"]["getAll"][0];
-
 const Content: React.FC = () => {
-  const { data: sessionData } = useSession();
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null)
+  const [globalState, setGlobalState] = useAtom(globalStateAtom);
 
-  useEffect(() => {console.log("selectedTopic: ", selectedTopic)}, [selectedTopic]);
-
-  const {data: topics, refetch: refetchTopics} = api.topic.getAll.useQuery(
-    undefined, 
-      {
-        enabled: sessionData?.user !== undefined,
-        onSuccess: (data) => {
-          setSelectedTopic(selectedTopic ?? data[0] ?? null)
-        }
-      }
-    );
-
-    const createTopic = api.topic.create.useMutation({
-      onSuccess: () => {
-        void refetchTopics();
-      }
-    });
-
-    const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
-      {
-        topicId: selectedTopic?.id ?? "",
-      },
-      {
-        enabled: sessionData?.user !== undefined && selectedTopic !== null,
-      }
-    );
-
-    const createNote = api.note.create.useMutation({
-      onSuccess: () => {
-        void refetchNotes();
-      },
-    });
-  
-    const deleteNote = api.note.delete.useMutation({
-      onSuccess: () => {
-        void refetchNotes();
-      },
-    });
-
-    return (
-      <div>
-          <div className="px-2">
-          <div className="col-span-3">
-          <ul className="menu rounded-box w-56 bg-base-100 p-2">
-          {topics?.map((topic) => (
-            <li key={topic.id}>
-              <a
-                href="#"
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  setSelectedTopic(topic);
-                }}
-              >
-                {topic.title}
-              </a>
-            </li>
-          ))}
-        </ul>
-          <div className="divider"></div>
-              <input
-                type="text"
-                placeholder="New Topic"
-                className="input-bordered input input-sm w-full"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    createTopic.mutate({
-                      title: e.currentTarget.value,
-                    });
-                    e.currentTarget.value = "";
-                  }
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-span-3">
-            <div>
-              {notes?.map((note) => (
-                <div key={note.id} className="mt-5">
-                  <NoteCard
-                    note={note}
-                    onDelete={() => void deleteNote.mutate({ id: note.id })}
-                  />
-                </div>
-              ))}
-            </div>
-              <NoteEditor
-              onSave={({ title, content }) => {
-                void createNote.mutate({
-                  title,
-                  content,
-                  topicId: selectedTopic?.id ?? "",
-                });
-              }}
-            />
-          </div>
-      </div>
-    )
-    
-}
+  return (
+    <div>
+      <h1 className="mb-8 text-4xl font-bold text-white">
+        Global state is global: {globalState}
+      </h1>
+    </div>
+  );
+};
