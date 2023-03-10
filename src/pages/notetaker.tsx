@@ -19,7 +19,6 @@ const Home: NextPage = () => {
         <NavBar />
         <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-            Dis is page
             <Content />
           </div>
         </section>
@@ -36,10 +35,6 @@ const Content: React.FC = () => {
   const { data: sessionData } = useSession();
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
 
-  useEffect(() => {
-    console.log("selectedTopic: ", selectedTopic);
-  }, [selectedTopic]);
-
   const { data: topics, refetch: refetchTopics } = api.topic.getAll.useQuery(
     undefined,
     {
@@ -47,6 +42,15 @@ const Content: React.FC = () => {
       onSuccess: (data) => {
         setSelectedTopic(selectedTopic ?? data[0] ?? null);
       },
+    }
+  );
+
+  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
+    {
+      topicId: selectedTopic?.id ?? "",
+    },
+    {
+      enabled: sessionData?.user !== undefined && selectedTopic !== null,
     }
   );
 
@@ -61,15 +65,6 @@ const Content: React.FC = () => {
       void refetchNotes();
     },
   });
-
-  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
-    {
-      topicId: selectedTopic?.id ?? "",
-    },
-    {
-      enabled: sessionData?.user !== undefined && selectedTopic !== null,
-    }
-  );
 
   const createNote = api.note.create.useMutation({
     onSuccess: () => {
