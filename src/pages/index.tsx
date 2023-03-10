@@ -69,6 +69,16 @@ const Home: NextPage = () => {
                 Amandas page
               </button>
             </Link>
+            <Link href="/pederpage">
+              <button
+                className="mt-4 font-semibold text-white underline underline-offset-8 transition "
+                onClick={() => {
+                  console.log("Clicked");
+                }}
+              >
+                Peders page
+              </button>
+            </Link>
           </div>
         </div>
       </main>
