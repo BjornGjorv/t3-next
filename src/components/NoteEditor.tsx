@@ -1,10 +1,5 @@
 import { useState } from "react";
 
-// import CodeMirror from "@uiw/react-codemirror";
-// import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-// import { languages } from "@codemirror/language-data";
-// ohooi
-
 export const NoteEditor = ({
   onSave,
 }: {
@@ -24,7 +19,7 @@ export const NoteEditor = ({
             value={title}
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
-        <input
+          <input
             type="text"
             placeholder="Body"
             className="input-primary input input-lg w-full font-bold"
@@ -32,18 +27,6 @@ export const NoteEditor = ({
             onChange={(e) => setCode(e.currentTarget.value)}
           />
         </h2>
-        {/* <CodeMirror
-          value={code}
-          width="500px"
-          height="30vh"
-          minWidth="100%"
-          minHeight="30vh"
-          extensions={[
-            markdown({ base: markdownLanguage, codeLanguages: languages }),
-          ]}
-          onChange={(value) => setCode(value)}
-          className="border border-gray-300"
-        /> */}
       </div>
       <div className="card-actions justify-end">
         <button
