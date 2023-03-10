@@ -1,5 +1,7 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import LogoPirateSVG from "~/icons/LogoPirateSVG";
+import LogoRobotSVG from "~/icons/LogoRobotSVG";
 import LogoSVG from "~/icons/logoSVG";
 import DropDownMenu from "./DropDownMenu";
 
@@ -9,8 +11,12 @@ const NavBar = () => {
   return (
     <nav className="navbar bg-base-100 p-7">
       <section className="flex-1 font-bold">
-        <div className="mr-3 h-16 w-16 pt-2">
-          <LogoSVG />
+        {/* <div className="mr-3 h-16 w-16 pt-2"><LogoSVG /></div> */}
+        {/* <div className="mr-2 h-16 w-16">
+          <LogoPirateSVG />
+        </div> */}
+        <div className="mr-2 h-16 w-16">
+          <LogoRobotSVG />
         </div>
         <Link href="/" className="text-focus text-4xl">
           byteBrew
