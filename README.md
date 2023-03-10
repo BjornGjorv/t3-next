@@ -20,6 +20,7 @@ Other tech also added to this project
 - DaisyUI
 - HeadlessUi
 - Supabase database
+- Jotai state management
 
 ## Learn More
 
