@@ -56,7 +56,7 @@ const Home: NextPage = () => {
                   console.log("Clicked");
                 }}
               >
-                Notetaker
+                Jot something down
               </button>
             </Link>
             <Link href="/amandapage">
