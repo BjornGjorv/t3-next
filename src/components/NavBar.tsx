@@ -1,17 +1,47 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import LogoRobotSVG from "~/icons/LogoRobotSVG";
 import DropDownMenu from "./DropDownMenu";
+import { useAtom } from "jotai";
+import { globalStateAtom } from "~/state/globalState";
 
 const NavBar = () => {
   const { data: sessionData } = useSession();
+  const [globalState] = useAtom(globalStateAtom);
+  const logoArray = [
+    "Brew",
+    "Bro",
+    "Brawl",
+    "Bruh",
+    "Bong",
+    "Slicer",
+    "B0000i",
+    "Brew",
+    "Bing",
+    "Bank",
+    "Slice",
+    "Bangs",
+    "Brawl",
+    "Bingo",
+    "B0i",
+    "Me",
+    "Mayte",
+  ];
 
   return (
-    <nav className="navbar bg-base-100">
-      <section className="flex-1 p-5 pl-5 text-lg font-bold">
-        <Link href="/">
-          {sessionData?.user?.name
-            ? `Notes for ${sessionData.user.name}`
-            : "Something went wrong :("}
+    <nav className="navbar bg-base-100 p-7">
+      <section className="flex-1 font-bold">
+        <Link
+          href="/"
+          className="text-focus flex flex-row items-center justify-center text-4xl"
+        >
+          <div className="mr-2 ">
+            <LogoRobotSVG />
+          </div>
+          <p>
+            byte
+            {globalState ? logoArray[globalState % logoArray.length] : "Brawl"}
+          </p>
         </Link>
       </section>
       <div className="flex-none gap-2">
