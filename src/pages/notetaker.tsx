@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "~/components/NavBar";
@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { api, type RouterOutputs } from "../utils/api";
 import { NoteEditor } from "~/components/NoteEditor";
 import { NoteCard } from "~/components/NoteCard";
+import HearthSVG from "~/icons/HearthSVG";
 
 const Home: NextPage = () => {
   return (
@@ -34,6 +35,7 @@ type Topic = RouterOutputs["topic"]["getAll"][0];
 const Content: React.FC = () => {
   const { data: sessionData } = useSession();
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [categoryInput, setCategoryInput] = useState("");
 
   const { data: topics, refetch: refetchTopics } = api.topic.getAll.useQuery(
     undefined,
@@ -80,49 +82,64 @@ const Content: React.FC = () => {
 
   return (
     <div>
-      <div className="px-2">
-        <div className="col-span-3">
-          <ul className="menu rounded-box w-56 bg-base-100 p-2">
-            {topics?.map((topic) => (
-              <li key={topic.id}>
-                <div className="flex justify-between">
-                  <a
-                    href="#"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setSelectedTopic(topic);
-                    }}
-                  >
-                    {topic.title}
-                  </a>
-                  <span
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      deleteTopic.mutate({ id: topic.id });
-                    }}
-                  >
-                    X
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className="divider"></div>
-          <input
-            type="text"
-            placeholder="New Topic"
-            className="input-bordered input input-sm w-full"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                createTopic.mutate({
-                  title: e.currentTarget.value,
-                });
-                e.currentTarget.value = "";
-              }
-            }}
-          />
-        </div>
+      <h1 className="mb-8 text-4xl font-bold text-white">Categories</h1>
+      <ul className="menu rounded-box mb-8 bg-base-100 p-2">
+        {topics?.map((topic) => (
+          <li key={topic.id}>
+            <div className="flex justify-between">
+              <a
+                href="#"
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  setSelectedTopic(topic);
+                }}
+              >
+                {topic.title}
+              </a>
+              <span
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  deleteTopic.mutate({ id: topic.id });
+                }}
+              >
+                X
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="New Category"
+          className="input-bordered input input-md w-full"
+          value={categoryInput}
+          onChange={(e) => setCategoryInput(e.currentTarget.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              createTopic.mutate({
+                title: categoryInput,
+              });
+              setCategoryInput("");
+              e.currentTarget.value = "";
+            }
+          }}
+        />
+        <button
+          className="btn-primary btn gap-2"
+          onClick={(e) => {
+            createTopic.mutate({
+              title: categoryInput,
+            });
+            setCategoryInput("");
+          }}
+        >
+          <HearthSVG />
+          Add
+        </button>
       </div>
+      <div className="divider mt-8 mb-8"></div>
+
       <div className="col-span-3">
         <div>
           {notes?.map((note) => (
