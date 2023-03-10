@@ -1,16 +1,11 @@
 import { Menu, Transition } from "@headlessui/react";
 import { signIn, useSession, signOut } from "next-auth/react";
+import { urlArray } from "../utils/urlArray";
 
 const openInNewTab = (url: string | URL | undefined) => {
     const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
     if (newWindow) newWindow.opener = null
 }
-
-const urlArray = [
-    "http://www.google.com",
-    "http://www.yahoo.com",
-    "http://www.stackoverflow.com"
-];
 
 function randomUrl() {
     const randomNumber = Math.floor(Math.random() * urlArray.length);
