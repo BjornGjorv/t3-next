@@ -3,7 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import NavBar from "~/components/NavBar";
 import { useSession } from "next-auth/react";
-import { api, type RouterOutputs } from "../utils/api";
+import { api, type RouterOutputs } from "../../utils/api";
 import { NoteEditor } from "~/components/NoteEditor";
 import { NoteCard } from "~/components/NoteCard";
 import HearthSVG from "~/icons/HearthSVG";
