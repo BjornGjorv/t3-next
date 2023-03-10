@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import { useAtom } from "jotai";
+import { globalStateAtom } from "~/state/globalState";
 
 const toastList = [
   "Oh, wow! Look at you.",
@@ -49,6 +51,7 @@ export const NoteEditor = ({
 }: {
   onSave: (note: { title: string; content: string }) => void;
 }) => {
+  const [globalState, setGlobalState] = useAtom(globalStateAtom);
   const [code, setCode] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [titleLength, setTitleLength] = useState<number>(0);
@@ -73,6 +76,7 @@ export const NoteEditor = ({
   const hideToastAfterDelay = (delay = 5000): void => {
     setTimeout(() => {
       setToastType("");
+      setGlobalState(globalState + 1);
     }, delay);
   };
 
