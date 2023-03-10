@@ -20,7 +20,6 @@ const Home: NextPage = () => {
       </Head>
       <main data-theme="winter">
         <NavBar />
-        {/* <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
         <section className="flex min-h-screen flex-col items-center justify-center bg-base-300">
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
             <Content />
@@ -130,7 +129,7 @@ const Content: React.FC = () => {
           }}
         />
         <button
-          className="btn-primary btn gap-2 bg-primary"
+          className="btn-primary btn gap-2"
           onClick={(e) => {
             createTopic.mutate({
               title: categoryInput,
