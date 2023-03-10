@@ -2,7 +2,7 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import LogoPirateSVG from "~/icons/LogoPirateSVG";
 import LogoRobotSVG from "~/icons/LogoRobotSVG";
-import LogoSVG from "~/icons/logoSVG";
+import LogoSkierSVG from "~/icons/LogoSkierSVG";
 import DropDownMenu from "./DropDownMenu";
 
 const NavBar = () => {

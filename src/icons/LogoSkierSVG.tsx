@@ -1,4 +1,4 @@
-const LogoSVG = ({ width = 40 }) => (
+const LogoSkierSVG = ({ width = 40 }) => (
   <svg
     width={`${width}px`}
     height={`${width}px`}
@@ -37,4 +37,4 @@ const LogoSVG = ({ width = 40 }) => (
   </svg>
 );
 
-export default LogoSVG;
+export default LogoSkierSVG;
