@@ -15,11 +15,14 @@ const NavBar = () => {
         {/* <div className="mr-2 h-16 w-16">
           <LogoPirateSVG />
         </div> */}
-        <div className="mr-2 h-16 w-16">
-          <LogoRobotSVG />
-        </div>
-        <Link href="/" className="text-focus text-4xl">
-          byteBrew
+        <Link
+          href="/"
+          className="text-focus flex flex-row items-center justify-center text-4xl"
+        >
+          <div className="mr-2 ">
+            <LogoRobotSVG />
+          </div>
+          <p>byteBrew</p>
         </Link>
       </section>
       <div className="flex-none gap-2">
