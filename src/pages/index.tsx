@@ -49,34 +49,15 @@ const Home: NextPage = () => {
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
-            <Link href="/notetaker">
+            <Link href="/private/mynotes">
               <button
-                className="mt-6 font-semibold text-white underline underline-offset-8 transition "
+                className="mt-4 rounded-full px-10 py-3 font-semibold
+                      text-white underline underline-offset-8 transition "
                 onClick={() => {
                   console.log("Clicked");
                 }}
               >
                 Notetaker
-              </button>
-            </Link>
-            <Link href="/amandapage">
-              <button
-                className="mt-4 font-semibold text-white underline underline-offset-8 transition "
-                onClick={() => {
-                  console.log("Clicked");
-                }}
-              >
-                Amandas page
-              </button>
-            </Link>
-            <Link href="/pederpage">
-              <button
-                className="mt-4 font-semibold text-white underline underline-offset-8 transition "
-                onClick={() => {
-                  console.log("Clicked");
-                }}
-              >
-                Peders page
               </button>
             </Link>
           </div>
