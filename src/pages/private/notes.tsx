@@ -20,7 +20,6 @@ const Home: NextPage = () => {
       </Head>
       <main data-theme="winter">
         <NavBar />
-        {/* <section className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
         <section className="flex min-h-screen flex-col items-center justify-center bg-base-300">
           <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
             <Content />
@@ -86,7 +85,7 @@ const Content: React.FC = () => {
 
   return (
     <div>
-      <h1 className="mb-8 text-4xl font-bold text-white">Categories</h1>
+      <h1 className="mb-8 text-4xl font-bold">Categories</h1>
       <ul className="menu rounded-box mb-8 bg-base-100 p-2">
         {topics?.map((topic) => (
           <li key={topic.id}>
@@ -130,7 +129,7 @@ const Content: React.FC = () => {
           }}
         />
         <button
-          className="btn-primary btn gap-2 bg-primary"
+          className="btn-primary btn gap-2"
           onClick={(e) => {
             createTopic.mutate({
               title: categoryInput,
@@ -152,7 +151,7 @@ const Content: React.FC = () => {
       </div>
       <div className="divider mt-8 mb-8"></div>
 
-      <h1 className="mb-8 text-4xl font-bold text-white">
+      <h1 className="mb-8 text-4xl font-bold">
         Global state counter: {globalState}
       </h1>
       <div className="col-span-3">

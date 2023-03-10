@@ -16,7 +16,7 @@ export const NoteCard = ({
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   return (
-    <div className="card mt-5 border border-gray-200 bg-base-100 shadow-xl">
+    <div className="card mt-5 bg-base-100 shadow-xl">
       <div className="card-body m-0 p-3">
         <div
           className={`collapse-arrow ${
@@ -33,7 +33,10 @@ export const NoteCard = ({
           </div>
         </div>
         <div className="card-actions mx-2 flex justify-end">
-          <button className="btn-warning btn-xs btn px-5" onClick={onDelete}>
+          <button
+            className="btn-outline btn-xs btn mb-2 px-5"
+            onClick={onDelete}
+          >
             Delete
           </button>
         </div>
