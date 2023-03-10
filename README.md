@@ -37,4 +37,7 @@ You can check out the [create-t3-app GitHub repository](https://github.com/t3-os
 - ```npm run dev -- -p 3001```
 
 ## And how do I deploy?
-- git push (yup thats it)
+- git push (yup thats it, you get a preview link in the PR)
+
+## Troubleshooting
+- make sure to run node between version 16 and 18, else the app might crash. (protip: use nvm and run ```nvm use 18```
