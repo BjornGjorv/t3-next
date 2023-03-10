@@ -13,14 +13,16 @@ const NavBar = () => {
     "Bro",
     "Brawl",
     "Bruh",
-    "Bring",
-    "Bringer",
+    "Slicer",
     "Bong",
     "Bing",
     "Bangs",
     "Bank",
+    "Slice",
     "Bingo",
-    "Master",
+    "B0i",
+    "Me",
+    "Mayte",
   ];
 
   return (
