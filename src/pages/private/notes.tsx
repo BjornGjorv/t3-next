@@ -151,9 +151,7 @@ const Content: React.FC = () => {
       </div>
       <div className="divider mt-8 mb-8"></div>
 
-      <h1 className="mb-8 text-4xl font-bold">
-        Global state counter: {globalState}
-      </h1>
+      <h1 className="mb-8 text-4xl font-bold">Notes</h1>
       <div className="col-span-3">
         <div>
           {notes?.map((note) => (
